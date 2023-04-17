@@ -1,24 +1,26 @@
 const User = require("../models/user.model.js");
 
+
 // Create and Save a new user
-exports.create = (req, res) => {
+exports.create = (req, res) => {  
   // Validate request
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
   }
-
+  
   // Create a user
   const user = new User({
     id: req.body.id,
-    name: req.body.name,
-    age: req.body.age,
-    sex: req.body.sex,
-    size: req.body.size,
-    lifestyle: req.body.lifestyle,
-    city: req.body.city,
-    password: req.body.password,
+    First_Name: req.body.First_Name,
+    Last_Name: req.body.Last_Name,
+    Age: req.body.Age,
+    Sex: req.body.Sex,
+    Size: req.body.Size,
+    Lifestyle: req.body.Lifestyle,
+    City: req.body.City,
+    Password: req.body.Password,
   });
 
   // Save user in the database
@@ -34,7 +36,7 @@ exports.create = (req, res) => {
 
 // Retrieve all users from the database (with condition).
 exports.findAll = (req, res) => {
-  const iduserID = req.query.ID;
+  const iduserID = req.query.id;
 
   User.getAll(iduserID, (err, data) => {
     if (err)

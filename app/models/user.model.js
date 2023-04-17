@@ -2,18 +2,20 @@ const sql = require("./db.js");
 
 // constructor
 const Users = function(users) {
-  this.id = users.ID;
-  this.name = users.Name;
-  this.age= users.Age;
-  this.sex = users.Sex;
-  this.size = users.Size;
-  this.lifestyle = users.Lifestyle;
-  this.city = users.City;
-  this.password = users.Password;
+  this.id = users.id;
+  this.First_Name = users.First_Name;
+  this.Last_Name = users.Last_Name;
+  this.Age= users.Age;
+  this.Sex = users.Sex;
+  this.Size = users.Size;
+  this.Lifestyle = users.Lifestyle;
+  this.City = users.City;
+  this.Password = users.Password;
 };
 
 Users.create = (newUser, result) => {
-  sql.query("INSERT INTO userID SET ?", newUser, (err, res) => {
+  console.log(newUser)
+  sql.query("INSERT INTO Users SET ?", newUser, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -26,7 +28,7 @@ Users.create = (newUser, result) => {
 };
 
 Users.findById = (iduserID, result) => {
-  sql.query(`SELECT * FROM Users WHERE ID = ${iduserID}`, (err, res) => {
+  sql.query(`SELECT * FROM Users WHERE id = ${iduserID}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -64,7 +66,7 @@ Users.getAll = (iduserID, result) => {
 };
 
 Users.getAllpassword= result => {
-  sql.query("SELECT * FROM userID WHERE published=true", (err, res) => {
+  sql.query("SELECT * FROM Users ", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -78,8 +80,8 @@ Users.getAllpassword= result => {
 
 Users.updateById = (id, User, result) => {
   sql.query(
-    "UPDATE Users SET iduserID = ?, user = ?, password= ? WHERE id = ?",
-    [User.iduserID, User.user, User.published, id],
+    "UPDATE Users SET id = ?, user = ?, password= ? WHERE id = ?",
+    [User.id, User.First_Name, User.Last_Name, User.Age, User.Sex, User.Lifestyle, User.City, User.Password, User.id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
