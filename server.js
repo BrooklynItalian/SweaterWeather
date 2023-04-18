@@ -24,10 +24,8 @@ app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is d
 
 app.use(express.static('public'))
 
-let weatherData = {};
-let userData = {};
-
 require("./app/routes/user.routes.js")(app);
+require("./app/routes/weather.routes.js")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -43,31 +41,6 @@ app.get("/", (req, res) => {
   // res.send('Hello')
 });
 
-app.get('/allUsers', sendUsers);
-function sendUsers (req, res)
-{
-  res.send(userData);
-};
 
 
-app.get('/allWeather', sendData);
-function sendData (req, res)
-{
-  res.send(weatherData);
-};
 
-//Post route
-
-app.post('/addWeather', addData);
-
-function addData (req,res)
-{
-  newData =
-  {
-    temp: req.body.temp,
-    date: req.body.date,
-    content: req.body.content
-  }
-  weatherData=newData
-  res.send(weatherData)
-}

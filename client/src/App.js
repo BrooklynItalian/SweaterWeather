@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Routes, Route}
 import Home from './pages';
 import SignUp from './pages/signup';
 import Login from './pages/login';
+import WeatherData from './pages/weather-data';
+import AddData from './pages/add-data';
 
   
 function App() {
@@ -16,6 +18,8 @@ return (
         <Route exact path='/' exact element={<Home />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<SignUp/>} />
+        <Route path='/weather-data' element={<WeatherData/>} />
+        <Route path='/add-data' element ={<AddData/>} />
     </Routes>
     </Router>
 );
