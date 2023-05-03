@@ -1,3 +1,19 @@
+function initial() {
+  Role.create({
+    id: 1,
+    name: "user"
+  });
+ 
+  Role.create({
+    id: 2,
+    name: "moderator"
+  });
+ 
+  Role.create({
+    id: 3,
+    name: "admin"
+  });
+}
 const express = require("express");
 // const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
@@ -11,7 +27,7 @@ var fs = require('fs');
 
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: '*'
 };
 
 app.use(cors(corsOptions));
@@ -24,8 +40,17 @@ app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is d
 
 app.use(express.static('public'))
 
-require("./app/routes/user.routes.js")(app);
-require("./app/routes/weather.routes.js")(app);
+const db = require("./app/models");
+const Role = db.role;
+
+db.sequelize.sync({force: true}).then(() => {
+  console.log('Drop and Resync Db');
+  initial();
+});
+
+require('./app/routes/auth.routes')(app);
+require('./app/routes/user.routes')(app);
+require('./app/routes/weather.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -33,7 +58,12 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-// simple route
+app.use('/login', (req, res) => {
+  res.send({
+    token: 'test123'
+  });
+});
+
 app.get("/", (req, res) => {
   // res.sendFile(path.join(__dirname+'/index.html'));
   res.json({ message: "Hello Professor." });
@@ -41,6 +71,22 @@ app.get("/", (req, res) => {
   // res.send('Hello')
 });
 
+// function initial() {
+//   Role.create({
+//     id: 1,
+//     name: "user"
+//   });
+ 
+//   Role.create({
+//     id: 2,
+//     name: "moderator"
+//   });
+ 
+//   Role.create({
+//     id: 3,
+//     name: "admin"
+//   });
+// }
 
 
 

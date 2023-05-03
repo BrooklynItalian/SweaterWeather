@@ -2,18 +2,45 @@ import React, { useState, useEffect } from 'react';
 import countries from 'i18n-iso-countries';
 import 'i18n-iso-countries/langs/en.json';
 
-const AddData = () => {
+
+// async function getWeatherKey() {
+//   return fetch('http://localhost:8080/api/weatherApiKey', {
+//   })
+//     .then(res => res.json())
+//  }
+
+ const AddData = () => {
   const [apiData, setApiData] = useState({});
   const [getZip, setGetZip] = useState('11228');
   const [zip, setZip] = useState('11228');
+  // const [apiKey, setApiKey] = useState('');
   const apiKey = 'c32d4e75c940c91960e45ca82d20a306';
+  // apiKey = getWeatherKey();
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${apiKey}`;
 
+  // useEffect(() => {
+  //   getWeatherKey().then((key) => {
+  //     setApiKey(key);
+  //   });
+  // }, []);
+
   useEffect(() => {
-    fetch(apiUrl)
-      .then((res) => res.json())
-      .then((data) => setApiData(data));
-  }, [apiUrl]);
+    if (apiKey) {
+      fetch(apiUrl) 
+      //   {
+      //   headers: {
+      //     Authorization: `Bearer ${apiKey}`,
+      //   },
+      // })
+        .then((res) => res.json())
+        .then((data) => setApiData(data));
+    }
+  }, [apiKey, apiUrl]);
+  // useEffect(() => {
+  //   fetch(apiUrl)
+  //     .then((res) => res.json())
+  //     .then((data) => setApiData(data));
+  // }, [apiUrl]);
 
   const inputHandler = (event) => {
     setGetZip(event.target.value);

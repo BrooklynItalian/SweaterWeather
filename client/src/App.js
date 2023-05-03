@@ -1,14 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import useToken from './components/Token/token';
-import { BrowserRouter as Router, Routes, Route}
-    from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages';
 import SignUp from './pages/signup';
 import Login from './pages/login';
 import WeatherData from './pages/weather-data';
 import AddData from './pages/add-data';
+
+function App() {
+  const [token, setToken] = useState(localStorage.getItem('token') || '');
+
+  return (
+    <Router>
+      <div>
+        <Navbar />
+
+        <Routes>
+          <Route exact path='/' element={<Home />} />
+          <Route path='/login' element={<Login setToken={setToken} />} />
+          <Route path='/signup' element={<SignUp />} />
+          {token && (
+            <>
+              <Route path='/weather-data' element={<WeatherData />} />
+              <Route path='/add-data' element={<AddData />} />
+            </>
+          )}
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+
+
+// import React from 'react';
+// import './App.css';
+// import Navbar from './components/Navbar';
+// import useToken from './components/Token/token';
+// import { BrowserRouter as Router, Routes, Route}
+//     from 'react-router-dom';
+// import Home from './pages';
+// import SignUp from './pages/signup';
+// import Login from './pages/login';
+// import WeatherData from './pages/weather-data';
+// import AddData from './pages/add-data';
 
 // function setToken(userToken) {
 //     sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -21,26 +59,26 @@ import AddData from './pages/add-data';
 // }
 
 
-function App() {
-    const { token, setToken } = useToken();
+// function App() {
+//     // const { token, setToken } = useToken();
 
-    if(!token) {
-        return <Login setToken={setToken} />
-    }
+//     // if(!token) {
+//     //     return <Login setToken={setToken} />
+//     // }
 
-  return (
-    <Router>
-    <Navbar />
-    <Routes>
-        <Route exact path='/' exact element={<Home />} />
-        <Route path='/login' element={<Login/>} />
-        <Route path='/signup' element={<SignUp/>} />
-        <Route path='/weather-data' element={<WeatherData/>} />
-        <Route path='/add-data' element ={<AddData/>} />
-    </Routes>
-    </Router>
-);
-}
+//   return (
+//     <Router>
+//     <Navbar />
+//     <Routes>
+//         <Route exact path='/' exact element={<Home />} />
+//         <Route path='/login' element={<Login/>} />
+//         <Route path='/signup' element={<SignUp/>} />
+//         <Route path='/weather-data' element={<WeatherData/>} />
+//         <Route path='/add-data' element ={<AddData/>} />
+//     </Routes>
+//     </Router>
+// );
+// }
   
-export default App;
+// export default App;
 

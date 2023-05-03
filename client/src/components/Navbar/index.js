@@ -7,9 +7,9 @@ const Navbar = () => {
     <>
       <Nav>
         <NavMenu>
-          {/* <NavLink to="/login" activeStyle>
+          <NavLink to="/login" activeStyle>
             Login
-          </NavLink> */}
+          </NavLink>
           <NavLink to="/signup" activeStyle>
             Sign Up
           </NavLink>
